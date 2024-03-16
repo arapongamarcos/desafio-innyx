@@ -7,6 +7,9 @@ import {
 } from 'vue-router';
 
 import routes from './routes';
+import { authStore } from 'src/stores/auth';
+import { Dialog } from 'quasar';
+
 // import { keycloak } from 'src/boot/keycloak';
 // import { Dialog } from 'quasar';
 
@@ -38,23 +41,25 @@ export default route(function (/* { store, ssrContext } */) {
 
   Router.beforeEach((to, from, next) => {
     if (to.meta.requiresAuth) {
-      // if (!keycloak.authenticated) {
-      //   next({ path: '/' });
-      // } else {
-      //   const requiredRoles = to.meta.requiredRoles || [];
-      //   const hasRequiredRoles = requiredRoles.every(role => keycloak.roles.includes(role));
+      const isLogin = authStore().isLoggedIn;
+      if (!isLogin) {
+        next({ path: '/login' });
+      } else {
+        const userRole = authStore().userInfo.role;
+        const requiredRoles = (to.meta.requiredRoles as string[]) || [];
+        const hasRequiredRoles = requiredRoles.includes(userRole);
 
-      //   if (hasRequiredRoles) {
-      //     next();
-      //   } else {
-      //     Dialog.create({
-      //       title: 'Sem permissão!',
-      //       message: `Você não tem permissão para acessar essa área!`,
-      //       color: 'negative',
-      //       persistent: true,
-      //     });
-      //   }
-      // }
+        if (hasRequiredRoles) {
+          next();
+        } else {
+          Dialog.create({
+            title: 'Sem permissão!',
+            message: 'Você não tem permissão para acessar essa área!',
+            color: 'negative',
+            persistent: true,
+          });
+        }
+      }
       next();
     } else {
       next();

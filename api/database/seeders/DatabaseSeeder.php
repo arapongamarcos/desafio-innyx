@@ -5,6 +5,9 @@ namespace Database\Seeders;
 // use Illuminate\Database\Console\Seeds\WithoutModelEvents;
 use Utils\Uuid;
 use Illuminate\Database\Seeder;
+use App\Models\Product;
+use App\Models\Category;
+use App\Models\User;
 
 class DatabaseSeeder extends Seeder
 {
@@ -13,15 +16,20 @@ class DatabaseSeeder extends Seeder
      */
     public function run(): void
     {
-        // \App\Models\User::factory(10)->create();
 
-        \App\Models\User::factory()->create([
-            'name' => 'Test User',
-            'email' => 'test@example.com',
+        User::factory()->create([
+            'name' => 'Admin',
+            'email' => 'admin@admin.com',
+            'password' => 'admin',
         ]);
-        \App\Models\Product::query()->delete();
-        \App\Models\Category::query()->delete();
-        \App\Models\Category::factory()->create([
+        User::factory()->create([
+            'name' => 'User',
+            'email' => 'user@user.com',
+            'password' => 'user',
+        ]);
+        Product::query()->delete();
+        Category::query()->delete();
+        Category::factory()->create([
             'id' => Uuid::random(),
             'name' => 'Padrão'
         ]);

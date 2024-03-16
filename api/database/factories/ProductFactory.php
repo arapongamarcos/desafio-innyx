@@ -5,7 +5,7 @@ namespace Database\Factories;
 use Illuminate\Support\Str;
 use Illuminate\Database\Eloquent\Factories\Factory;
 use DateTime;
-use Core\Domain\Shared\ValueObject\Uuid;
+use Utils\Uuid;
 
 class ProductFactory extends Factory
 {
@@ -15,7 +15,7 @@ class ProductFactory extends Factory
      * @return array<string, mixed>
      */
     public function definition()
-    {   
+    {
         return [
             'id' => Uuid::random(),
             'name' => $this->faker->name,

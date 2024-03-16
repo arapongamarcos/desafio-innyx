@@ -20,7 +20,7 @@ function categoryRoutes(): RouteRecordRaw[] {
         requiredRoles: ['admin'],
       },
 
-      component: () => import('src/pages/categories/AddPage.vue'),
+      component: () => import('src/pages/categories/CreatePage.vue'),
     },
     {
       name: 'Editar categoria',
@@ -55,7 +55,7 @@ function productRoutes(): RouteRecordRaw[] {
         requiredRoles: ['admin'],
       },
 
-      component: () => import('src/pages/products/AddPage.vue'),
+      component: () => import('src/pages/products/CreatePage.vue'),
     },
     {
       name: 'Editar produto',
@@ -79,10 +79,25 @@ const routes: RouteRecordRaw[] = [
         name: 'Início',
         path: '',
         alias: 'home',
+        meta: {
+          requiresAuth: true,
+          requiredRoles: ['user', 'admin'],
+        },
         component: () => import('pages/HomePage.vue'),
       },
       ...categoryRoutes(),
       ...productRoutes(),
+    ],
+  },
+  {
+    path: '/login',
+    component: () => import('layouts/LoginLayout.vue'),
+    children: [
+      {
+        name: 'Login',
+        path: '',
+        component: () => import('pages/LoginPage.vue'),
+      },
     ],
   },
   {

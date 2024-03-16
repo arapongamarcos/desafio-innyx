@@ -71,7 +71,7 @@
     >
       <q-scroll-area class="fit">
         <q-list padding>
-          <q-item v-ripple clickable>
+          <q-item v-ripple clickable @click="openPage('')">
             <q-item-section avatar>
               <q-icon color="grey" :name="fasHouse" />
             </q-item-section>
@@ -79,7 +79,7 @@
               <q-item-label>Home</q-item-label>
             </q-item-section>
           </q-item>
-          <q-item v-ripple clickable>
+          <q-item v-ripple clickable @click="openPage('categorias')">
             <q-item-section avatar>
               <q-icon color="grey" :name="fasList" />
             </q-item-section>
@@ -87,7 +87,7 @@
               <q-item-label>Categorias</q-item-label>
             </q-item-section>
           </q-item>
-          <q-item v-ripple clickable>
+          <q-item v-ripple clickable @click="openPage('produtos')">
             <q-item-section avatar>
               <q-icon color="grey" :name="fasBoxOpen" />
             </q-item-section>
@@ -109,8 +109,15 @@
 import { ref } from 'vue';
 import { fasHouse, fasList, fasBoxOpen } from '@quasar/extras/fontawesome-v6';
 import logo from 'assets/logo.png';
+import { useRouter } from 'vue-router';
 
 const leftDrawerOpen = ref(false);
+const router = useRouter();
+
+function openPage(page: string) {
+  console.log(page);
+  router.push(`/${page}`);
+}
 
 function toggleLeftDrawer() {
   leftDrawerOpen.value = !leftDrawerOpen.value;
