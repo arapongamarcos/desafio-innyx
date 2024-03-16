@@ -65,14 +65,18 @@ const passwordRef = ref(null);
 
 const requiredRules = [(val: any) => !!val || 'Campo é obrigatório'];
 
-const form = reactive({ email: '', password: '', device_name: getDeviceId() });
+const form = reactive({ email: 'admin@admin.com', password: 'admin', device_name: getDeviceId() });
 
 async function onSubmit() {
   if (validateForm()) {
     const data = await auth.login(form);
     console.log(data);
     if (data.token) {
-      await router.push('/');
+      const user = await auth.getUser();
+      console.log(user);
+      if (user) {
+        router.push('/');
+      }
     } else {
       bad_auth.value = true;
     }

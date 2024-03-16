@@ -1,6 +1,6 @@
 <?php
 
-namespace Utils;
+namespace App\Utils;
 
 use InvalidArgumentException;
 use Ramsey\Uuid\Uuid as RamseyUuid;

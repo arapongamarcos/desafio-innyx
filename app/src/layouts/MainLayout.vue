@@ -106,18 +106,21 @@
 </template>
 
 <script setup lang="ts">
-import { ref } from 'vue';
+import { onMounted, ref } from 'vue';
 import { fasHouse, fasList, fasBoxOpen } from '@quasar/extras/fontawesome-v6';
 import logo from 'assets/logo.png';
 import { useRouter } from 'vue-router';
+import { authStore } from 'src/stores/auth';
 
 const leftDrawerOpen = ref(false);
 const router = useRouter();
 
 function openPage(page: string) {
-  console.log(page);
   router.push(`/${page}`);
 }
+onMounted(() => {
+  authStore().getUser();
+});
 
 function toggleLeftDrawer() {
   leftDrawerOpen.value = !leftDrawerOpen.value;

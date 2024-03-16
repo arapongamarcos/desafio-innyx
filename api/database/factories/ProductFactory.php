@@ -5,7 +5,7 @@ namespace Database\Factories;
 use Illuminate\Support\Str;
 use Illuminate\Database\Eloquent\Factories\Factory;
 use DateTime;
-use Utils\Uuid;
+use App\Utils\Uuid;
 
 class ProductFactory extends Factory
 {

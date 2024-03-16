@@ -4,7 +4,7 @@ namespace Database\Factories;
 
 use Illuminate\Support\Str;
 use Illuminate\Database\Eloquent\Factories\Factory;
-use Utils\Uuid;
+use App\Utils\Uuid;
 
 class CategoryFactory extends Factory
 {

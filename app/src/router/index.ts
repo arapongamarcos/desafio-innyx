@@ -7,7 +7,6 @@ import {
 } from 'vue-router';
 
 import routes from './routes';
-import { authStore } from 'src/stores/auth';
 import { Dialog } from 'quasar';
 
 // import { keycloak } from 'src/boot/keycloak';
@@ -41,15 +40,16 @@ export default route(function (/* { store, ssrContext } */) {
 
   Router.beforeEach((to, from, next) => {
     if (to.meta.requiresAuth) {
-      const isLogin = authStore().isLoggedIn;
+      const isLogin = !!localStorage.getItem('access_token');
       if (!isLogin) {
         next({ path: '/login' });
       } else {
-        const userRole = authStore().userInfo.role;
+        const userRole = JSON.parse(localStorage.getItem('user'))?.role || '';
         const requiredRoles = (to.meta.requiredRoles as string[]) || [];
         const hasRequiredRoles = requiredRoles.includes(userRole);
-
-        if (hasRequiredRoles) {
+        if (!requiredRoles.length) {
+          next();
+        } else if (hasRequiredRoles) {
           next();
         } else {
           Dialog.create({
@@ -60,7 +60,6 @@ export default route(function (/* { store, ssrContext } */) {
           });
         }
       }
-      next();
     } else {
       next();
     }

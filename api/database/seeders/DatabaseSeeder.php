@@ -3,11 +3,12 @@
 namespace Database\Seeders;
 
 // use Illuminate\Database\Console\Seeds\WithoutModelEvents;
-use Utils\Uuid;
+use App\Utils\Uuid;
 use Illuminate\Database\Seeder;
 use App\Models\Product;
 use App\Models\Category;
 use App\Models\User;
+use Illuminate\Support\Facades\Hash;
 
 class DatabaseSeeder extends Seeder
 {
@@ -17,15 +18,16 @@ class DatabaseSeeder extends Seeder
     public function run(): void
     {
 
+        User::query()->delete();
         User::factory()->create([
             'name' => 'Admin',
             'email' => 'admin@admin.com',
-            'password' => 'admin',
+            'password' => Hash::make('admin'),
         ]);
         User::factory()->create([
             'name' => 'User',
             'email' => 'user@user.com',
-            'password' => 'user',
+            'password' => Hash::make('user'),
         ]);
         Product::query()->delete();
         Category::query()->delete();

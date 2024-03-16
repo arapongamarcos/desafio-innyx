@@ -81,7 +81,6 @@ const routes: RouteRecordRaw[] = [
         alias: 'home',
         meta: {
           requiresAuth: true,
-          requiredRoles: ['user', 'admin'],
         },
         component: () => import('pages/HomePage.vue'),
       },

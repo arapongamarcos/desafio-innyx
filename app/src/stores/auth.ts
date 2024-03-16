@@ -4,14 +4,12 @@ import { User, UserLogin } from 'src/types/types';
 
 interface AuthState {
   status: string;
-  access_token: string;
   user: User;
 }
 
 export const authStore = defineStore('auth', {
   state: (): AuthState => ({
     status: 'success',
-    access_token: '',
     user: {
       name: '',
       email: '',
@@ -19,7 +17,7 @@ export const authStore = defineStore('auth', {
     },
   }),
   getters: {
-    isLoggedIn: (state): boolean => !!state.access_token,
+    isLoggedIn: (state): boolean => !!state.user.name,
     userInfo: (state): User => state.user,
   },
   actions: {
@@ -32,7 +30,6 @@ export const authStore = defineStore('auth', {
           .then((resp) => {
             localStorage.removetIem('access_token');
             this.status = 'success';
-            this.access_token = '';
             resolve(resp);
           })
           .catch((err) => {
@@ -52,27 +49,27 @@ export const authStore = defineStore('auth', {
             const access_token = resp.data.token;
             localStorage.setItem('access_token', access_token);
             this.status = 'success';
-            this.access_token = access_token;
-            resolve(resp.data.token);
+            resolve(resp.data);
           })
           .catch((err) => {
             this.status = 'error';
-            this.access_token = '';
             localStorage.removeItem('access_token');
             reject(err);
           });
       });
     },
     getUser(): Promise<User> {
+      console.log('store');
       return new Promise((resolve, reject) => {
         api({
           url: '/me',
           method: 'GET',
         })
           .then((resp) => {
-            const user = resp.data.user;
+            const user = resp.data.me;
             this.user = user;
-            resolve(resp.data.user);
+            localStorage.setItem('user', JSON.stringify(user));
+            resolve(resp.data.me);
           })
           .catch((err) => {
             this.user = {
