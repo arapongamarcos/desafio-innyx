@@ -23,11 +23,13 @@ class DatabaseSeeder extends Seeder
             'name' => 'Admin',
             'email' => 'admin@admin.com',
             'password' => Hash::make('admin'),
+            'role' => 'admin',
         ]);
         User::factory()->create([
             'name' => 'User',
             'email' => 'user@user.com',
             'password' => Hash::make('user'),
+            'role' => 'moderator',
         ]);
         Product::query()->delete();
         Category::query()->delete();

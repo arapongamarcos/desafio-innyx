@@ -46,14 +46,14 @@
               <q-list dense>
                 <q-item class="GL__menu-link-signed-in">
                   <q-item-section>
-                    <div>Marcos Araponga</div>
+                    <div>{{ user.name }} - {{ user.email }}</div>
                   </q-item-section>
                 </q-item>
 
                 <q-separator />
 
-                <q-item clickable class="GL__menu-link">
-                  <q-item-section>Sign out</q-item-section>
+                <q-item clickable class="GL__menu-link" @click="logout()">
+                  <q-item-section>Sair</q-item-section>
                 </q-item>
               </q-list>
             </q-menu>
@@ -114,12 +114,18 @@ import { authStore } from 'src/stores/auth';
 
 const leftDrawerOpen = ref(false);
 const router = useRouter();
+const auth = authStore();
+const user = ref({ name: '', email: '', role: '' });
 
 function openPage(page: string) {
   router.push(`/${page}`);
 }
-onMounted(() => {
-  authStore().getUser();
+async function logout() {
+  await auth.logout();
+  router.push('/login');
+}
+onMounted(async () => {
+  user.value = await authStore().getUser();
 });
 
 function toggleLeftDrawer() {

@@ -14,7 +14,7 @@
         <q-form class="q-gutter-md" @submit="onSubmit">
           <q-input
             ref="emailRef"
-            :rules="requiredRules"
+            :rules="emailRules"
             v-model="form.email"
             dense
             outlined
@@ -64,16 +64,26 @@ const emailRef = ref(null);
 const passwordRef = ref(null);
 
 const requiredRules = [(val: any) => !!val || 'Campo é obrigatório'];
+const emailRules = [
+  (val: string) => !!val || 'Campo é obrigatório',
+  (val: string) => {
+    const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+    return emailRegex.test(val) || 'Formato de e-mail inválido';
+  },
+];
 
-const form = reactive({ email: 'admin@admin.com', password: 'admin', device_name: getDeviceId() });
+const form = reactive({
+  email: 'admin@admin.com',
+  password: 'admin',
+  device_name: '',
+});
 
 async function onSubmit() {
   if (validateForm()) {
+    form.device_name = await getDeviceId();
     const data = await auth.login(form);
-    console.log(data);
     if (data.token) {
       const user = await auth.getUser();
-      console.log(user);
       if (user) {
         router.push('/');
       }
@@ -84,10 +94,10 @@ async function onSubmit() {
 }
 
 function validateForm() {
-  emailRef?.value?.validate();
-  passwordRef?.value?.validate();
+  emailRef.value.validate();
+  passwordRef.value.validate();
 
-  if (emailRef?.value?.hasError || passwordRef?.value?.hasError) {
+  if (emailRef.value.hasError || passwordRef.value.hasError) {
     $q.notify({
       color: 'negative',
       message: 'Preencha os campos obrigatórios',
@@ -97,12 +107,11 @@ function validateForm() {
 
   return true;
 }
-
 function generateUniqueDeviceId() {
   return Date.now().toString(36) + Math.random().toString(36).substr(2);
 }
 
-function getDeviceId() {
+async function getDeviceId() {
   let deviceId = localStorage.getItem('deviceId');
   if (!deviceId) {
     // Se não houver um ID armazenado localmente, verifique o armazenamento de sessão

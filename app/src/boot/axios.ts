@@ -23,11 +23,14 @@ api.interceptors.request.use(
       config.headers = Object.assign({
         Authorization: `Bearer ${token}`,
         'Content-Type': config.headers['Content-Type'],
+        Accept: 'application/json',
       });
       return config;
     }
     if (!window.location.href.endsWith('login')) {
-      document.location.href = '/#/login';
+      localStorage.removeItem('access_token');
+      localStorage.removeItem('user');
+      document.location.href = '/login';
       return Promise.reject();
     }
     return config;
@@ -50,7 +53,9 @@ api.interceptors.response.use(
     Loading.hide();
 
     if (error?.response?.status === 401) {
-      document.location.href = '/#/login';
+      localStorage.removeItem('access_token');
+      localStorage.removeItem('user');
+      document.location.href = '/login';
     } else {
       Notify.create({
         message: `Erro: ${

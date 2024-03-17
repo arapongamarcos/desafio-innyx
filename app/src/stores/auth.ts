@@ -28,7 +28,8 @@ export const authStore = defineStore('auth', {
           method: 'POST',
         })
           .then((resp) => {
-            localStorage.removetIem('access_token');
+            localStorage.removeItem('access_token');
+            localStorage.removeItem('user');
             this.status = 'success';
             resolve(resp);
           })
@@ -59,7 +60,6 @@ export const authStore = defineStore('auth', {
       });
     },
     getUser(): Promise<User> {
-      console.log('store');
       return new Promise((resolve, reject) => {
         api({
           url: '/me',

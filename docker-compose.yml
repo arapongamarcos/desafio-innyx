@@ -28,13 +28,13 @@ services:
     networks:
         - innyx-network
 
-  app:
-    build: ./app
-    container_name: app
-    ports:
-      - "9000:9000"
-    networks:
-      - innyx-network
+  # app:
+  #   build: ./app
+  #   container_name: app
+  #   ports:
+  #     - "9000:9000"
+  #   networks:
+  #     - innyx-network
 
   nginx:
     build: ./docker/nginx

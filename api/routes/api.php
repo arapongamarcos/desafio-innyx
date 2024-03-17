@@ -20,7 +20,9 @@ Route::post('/login', [AuthController::class, 'auth']);
 
 
 Route::middleware(['auth:sanctum'])->group(function () {
-    Route::post('/logout', [AuthController::class, 'logout'])->middleware('auth:sanctum');
-    Route::get('/me', [AuthController::class, 'me'])->middleware('auth:sanctum');
+    Route::post('/logout', [AuthController::class, 'logout']);
+    Route::get('/me', [AuthController::class, 'me']);
+    // Route::get('/me', [AuthController::class, 'me'])->middleware('ability:check-status,place-orders')
+    // Route::get('/me', [AuthController::class, 'me'])->middleware('auth:sanctum')
 
 });

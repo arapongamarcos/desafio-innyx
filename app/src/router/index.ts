@@ -44,7 +44,8 @@ export default route(function (/* { store, ssrContext } */) {
       if (!isLogin) {
         next({ path: '/login' });
       } else {
-        const userRole = JSON.parse(localStorage.getItem('user'))?.role || '';
+        const userData: string | null = localStorage.getItem('user');
+        const userRole = userData ? JSON.parse(userData).role : '';
         const requiredRoles = (to.meta.requiredRoles as string[]) || [];
         const hasRequiredRoles = requiredRoles.includes(userRole);
         if (!requiredRoles.length) {
@@ -52,6 +53,7 @@ export default route(function (/* { store, ssrContext } */) {
         } else if (hasRequiredRoles) {
           next();
         } else {
+          next({ path: '/' });
           Dialog.create({
             title: 'Sem permissão!',
             message: 'Você não tem permissão para acessar essa área!',

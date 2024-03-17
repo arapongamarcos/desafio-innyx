@@ -16,7 +16,7 @@ class AuthController extends Controller
         $user = User::where('email', $request->email)->first();
         if (!$user || !Hash::check($request->password, $user->password)) {
             throw ValidationException::withMessages([
-                'email' => ['The provided credentials are incorrect']
+                'email' => ['E=mail ou senha inválido']
             ]);
         }
 
@@ -24,7 +24,7 @@ class AuthController extends Controller
         // if ($request->has('logout_others_devices'))
         $user->tokens()->delete();
 
-        $token = $user->createToken($request->device_name)->plainTextToken;
+        $token = $user->createToken($request->device_name, [$user->role])->plainTextToken;
 
         return response()->json([
             'token' => $token,
