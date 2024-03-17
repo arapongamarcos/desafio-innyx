@@ -1,9 +1,9 @@
 <template>
-  <q-page class="row items-center justify-evenly">
-    <div class="text-center">
-      <h2>Produtos List</h2>
-    </div>
+  <q-page>
+    <ListComponent />
   </q-page>
 </template>
 
-<script setup lang="ts"></script>
+<script setup lang="ts">
+import ListComponent from 'src/components/Products/ListComponent.vue';
+</script>

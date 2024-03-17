@@ -26,9 +26,9 @@ class DatabaseSeeder extends Seeder
             'role' => 'admin',
         ]);
         User::factory()->create([
-            'name' => 'User',
-            'email' => 'user@user.com',
-            'password' => Hash::make('user'),
+            'name' => 'Moderator',
+            'email' => 'moderator@moderator.com',
+            'password' => Hash::make('moderator'),
             'role' => 'moderator',
         ]);
         Product::query()->delete();

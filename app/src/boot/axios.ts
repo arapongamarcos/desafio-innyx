@@ -56,6 +56,11 @@ api.interceptors.response.use(
       localStorage.removeItem('access_token');
       localStorage.removeItem('user');
       document.location.href = '/login';
+    } else if (error?.response?.status === 403) {
+      Notify.create({
+        message: 'Erro: Você não tem permissão para execultar esta ação!',
+        color: 'negative',
+      });
     } else {
       Notify.create({
         message: `Erro: ${

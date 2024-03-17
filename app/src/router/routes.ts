@@ -7,7 +7,7 @@ function categoryRoutes(): RouteRecordRaw[] {
       path: 'categorias',
       meta: {
         requiresAuth: true,
-        requiredRoles: ['user', 'admin'],
+        requiredRoles: ['moderator', 'admin'],
       },
 
       component: () => import('src/pages/categories/ListPage.vue'),
@@ -42,7 +42,7 @@ function productRoutes(): RouteRecordRaw[] {
       path: 'produtos',
       meta: {
         requiresAuth: true,
-        requiredRoles: ['user', 'admin'],
+        requiredRoles: ['moderator', 'admin'],
       },
 
       component: () => import('src/pages/products/ListPage.vue'),

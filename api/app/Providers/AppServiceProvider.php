@@ -3,6 +3,24 @@
 namespace App\Providers;
 
 use Illuminate\Support\ServiceProvider;
+use Application\UseCase\Shared\Interfaces\{
+    TransactionInterface,
+    FileStorageInterface
+};
+
+use App\Repositories\Transaction\DBTransaction;
+use App\Services\Storage\FileStorage;
+
+
+use Application\Domain\Product\Repository\ProductRepositoryInterface;
+use Application\Domain\Category\Repository\CategoryRepositoryInterface;
+
+
+use App\Repositories\Eloquent\{
+    ProductEloquentRepository,
+    CategoryEloquentRepository
+};
+
 
 class AppServiceProvider extends ServiceProvider
 {
@@ -11,7 +29,8 @@ class AppServiceProvider extends ServiceProvider
      */
     public function register(): void
     {
-        //
+        $this->bindRepositories();
+        $this->bindServices();
     }
 
     /**
@@ -20,5 +39,30 @@ class AppServiceProvider extends ServiceProvider
     public function boot(): void
     {
         //
+    }
+
+    private function bindRepositories()
+    {
+        $this->app->bind(
+            TransactionInterface::class,
+            DBTransaction::class,
+        );
+
+        $this->app->singleton(
+            ProductRepositoryInterface::class,
+            ProductEloquentRepository::class,
+        );
+        $this->app->singleton(
+            CategoryRepositoryInterface::class,
+            CategoryEloquentRepository::class,
+        );
+    }
+
+    private function bindServices()
+    {
+        $this->app->singleton(
+            FileStorageInterface::class,
+            FileStorage::class
+        );
     }
 }

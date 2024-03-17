@@ -10,7 +10,7 @@ export default class CategoryApi {
     return await api.get(`/categories/${id}`);
   }
 
-  static async addCategory(payload: Category) {
+  static async CreateCategory(payload: Category) {
     return await api.post('/categories', payload);
   }
 
