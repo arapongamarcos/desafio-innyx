@@ -37,7 +37,7 @@ Route::middleware(['auth:sanctum'])->group(function () {
         Route::get('/products/create', 'create')->middleware('ability:admin');
         Route::get('/products/{id}', 'show')->middleware('ability:admin,moderator');
         Route::post('/products', 'store')->middleware('ability:admin');
-        Route::put('/products/{id}', 'update')->middleware('ability:admin');
+        Route::post('/products/{id}', 'update')->middleware('ability:admin');
         Route::delete('/products/{id}', 'destroy')->middleware('ability:admin');
     });
 });

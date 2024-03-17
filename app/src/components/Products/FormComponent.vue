@@ -82,7 +82,7 @@
         />
       </div>
 
-      <div class="col-12 col-sm-3">
+      <div class="col-12">
         <q-btn
           @click="save"
           no-caps
