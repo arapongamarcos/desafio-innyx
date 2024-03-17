@@ -2,7 +2,7 @@
 
 namespace App\Services\Storage;
 
-use Core\UseCase\Shared\Interfaces\FileStorageInterface;
+use Application\UseCase\Shared\Interfaces\FileStorageInterface;
 use Illuminate\Http\UploadedFile;
 use Storage;
 

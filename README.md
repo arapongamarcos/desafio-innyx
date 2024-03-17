@@ -19,8 +19,8 @@ Usuário: <b>admin@admin.com</b>
 Senha: <b>admin</b>
 
 Role Moderador: permissão apenas para visualizar registros
-Usuário: <b>moderator@moderator.com</b>
-Senha: <b>moderator</b>
+Usuário: <b>moderador@moderador.com</b>
+Senha: <b>moderador</b>
 
 
 ## API Laravel
