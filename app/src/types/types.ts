@@ -11,10 +11,10 @@ export type TableColumn = {
 export type Product = {
   name: string;
   description: string;
-  price: string;
+  price: number;
   expirationDate: string;
   categoryId: string;
-  imageUrl: string;
+  imageUrl?: string;
 };
 
 export type Category = {

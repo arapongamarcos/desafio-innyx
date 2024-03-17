@@ -67,7 +67,7 @@
       <div class="col-12">
         <div v-if="form.imageFile.length == 0">
           Imagem atual:
-          <q-img style="width: 50px; heigth: 50px" :src="imageUrl" />
+          <q-img style="width: 50px; height: 50px" :src="imageUrl" />
         </div>
       </div>
 
