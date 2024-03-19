@@ -23,6 +23,7 @@
           />
 
           <q-input
+            type="password"
             ref="passwordRef"
             :rules="requiredRules"
             v-model="form.password"
